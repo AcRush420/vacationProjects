@@ -70,8 +70,7 @@ class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath)
         let date = indexPath.row - firstWeekDayOfMonth + 2
-        
-        if cell?.backgroundColor == UIColor.blue {
+                if cell?.backgroundColor == UIColor.blue {
             cell?.backgroundColor=UIColor.clear
             let label = cell?.subviews[1] as! UILabel
             if (date < todaysDate && currentYear == presentYear && currentMonth == presentMonth) || (currentYear == presentYear && currentMonth < presentMonth) || currentYear < presentYear {
@@ -84,8 +83,18 @@ class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
             let label = cell?.subviews[1] as! UILabel
             label.textColor = UIColor.white
         }
+        animateView(cell!)
     }
-    
+    func animateView(_ viewToAnimate: UIView) {
+        UIView.animate(withDuration: 0.15, delay: 0, usingSpringWithDamping: 0.1, initialSpringVelocity: 0.5, options: .curveEaseIn, animations: {
+            viewToAnimate.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+        }) { (_) in
+            UIView.animate(withDuration: 0.15, delay: 0, usingSpringWithDamping: 0.1, initialSpringVelocity: 2, options: .curveEaseIn, animations: {
+                viewToAnimate.transform = CGAffineTransform(scaleX: 1, y: 1)
+            }, completion: nil)
+                
+        }
+    }
 //    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
 //        let cell=collectionView.cellForItem(at: indexPath)
 //        cell?.backgroundColor=UIColor.clear

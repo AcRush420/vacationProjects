@@ -100,11 +100,24 @@ class MonthView: UIView {
                 currentYear -= 1
             }
         }
+        animateView(sender)
         titleLabel.text = "\(monthArray[currentMonthIndex]) \(currentYear)"
         delegate?.didChangeMonth(month: currentMonthIndex + 1, year: currentYear)
     }
     
-    
+    func animateView(_ viewToAnimate: UIView) {
+        UIView.animate(withDuration: 0.15, delay: 0, usingSpringWithDamping: 0.1, initialSpringVelocity: 0.5, options: .curveEaseIn, animations: {
+            viewToAnimate.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+            viewToAnimate.backgroundColor = UIColor.lightGray
+        }) { (_) in
+            UIView.animate(withDuration: 0.15, delay: 0, usingSpringWithDamping: 0.1, initialSpringVelocity: 2, options: .curveEaseIn, animations: {
+                viewToAnimate.transform = CGAffineTransform(scaleX: 1, y: 1)
+                viewToAnimate.backgroundColor = UIColor.clear
+            }, completion: nil)
+                
+        }
+    }
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
